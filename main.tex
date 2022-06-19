@@ -13,6 +13,7 @@
 
 \documentclass[a4paper, 11pt]{article}
 \usepackage[margin=1in]{geometry}
+\usepackage{xcolor}
 % Set the font (output) encoding
 \usepackage[LGR]{fontenc}
 \usepackage{afterpage}
@@ -22,16 +23,7 @@
 \usepackage{graphicx}
 \usepackage[T1]{fontenc}
 \usepackage{tgtermes}
-%\usepackage{background}
 \graphicspath{ {./images/} }
-%\thispagestyle{empty}
-%\backgroundsetup{
-%scale=1,
-%angle=0,
-%opacity=.1,  %% adjust
-%contents={\includegraphics[width=\paperwidth,height=\paperheight]{images/sourceCode.jpg}}
-%}
-%\includegraphics[width=\paperwidth, height=\paperwidth]{images/universe.jpg}}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
@@ -61,8 +53,10 @@
 
 \tableofcontents
 
-
 {\fontfamily{cmss}\selectfont
+
+% Insert empty page after table of contents
+\newpage
 
 \begin{abstract}
 Σε αυτήν την εργασία θα αναφερθούμε στους τρόπους ανάπυτηξης ελεύθερου λογισμικού
@@ -448,25 +442,33 @@ H συνολική τεχνική ωφέλεια μιας εφαρμογής υ�
 
 Ο νεοσύστατος όμως κώδικας δεν μπορεί να ενταχθεί απλά στο κεντρικό κλαδί του αποθετηρίου. Αυτό, διότι ενδέχεται η προσθήκη του να προκαλεί σφάλματα σε άλλα τμήματα του λογισμικού. Σε αυτό το σημείο έρχονται και τα χαρακτηριστικά της συντηρησιμότητας και της αρθρωτότητας του κώδικα, τα οποία κρίνουν κατά πόσο νέος κώδικας θα επηρεάσει το υπόλοιπο λογισμικό στο σύνολο του. Εν πάση περιπτώση και ανεξαρτήτως του πόσο καλά τετμημένο είναι το πρότζεκτ ή πόσο καλά προσεγμένος είναι ο νέος κώδικας, η ομάδα οφείλει να ελέγξει την λειτουργικότητα του \textlatin{project} συνολικά, τρέχοντας \textlatin{test} κώδικα.
 
-Η πιο συνηθισμένη μορφή τεστ είναι αυτή του ελέγχου μονάδας(\textlatin{unit testing}).
+Η πιο συνηθισμένη μορφή τεστ είναι αυτή του ελέγχου μονάδας(\textlatin{unit testing}). Δηλαδή, έλεγχοι συγκεκριμένων τμημάτων κώδικα. Η διαδικασία με την οποία δημιουργούνταιτα οι παραπάνω έλεγχοι συνήθως έχει ως εξής:
+
+\begin{enumerate}
+    \item Εύρεση τμήματος που πρέπει να ελεγχθεί. Το κάθε τμήμα επιλέγεται με βάση το ενδιαφέρον του προγραμματιστή για το κάθε \textlatin{feature}. Έτσι, δεν υπάρχει κάποια προτεραιότητα, η οποία καθορίζει το ποια τμήματα επιλέγονται για έλεγχο.
+    \item Δημιουργία ελέγχων για το συγκεκριμένο τμήμα.
+    \item Εκτέλεση ελέγχων. Ο έλεγχος γίνεται στο τοπικό κλαδί του κώδικα.
+\end{enumerate}
+
+Μετά την επιτυχημένη εκτέλεση των τεστ, ο νέος κώδικας προστήθεται στο αποθετήριο ή μία αναφορά των αλλαγών κοινοποιείται για τα υπόλοιπα μέλη της ομάδας. Στην περίπτωση όπου ο κώδικας δεν καταφέρει να περάσει όλους τους ελέγχους επιτυχώς, ο προγραμματιστής οφείλει να επιστρέψει στο προηγούμενο βήμα της ανάπτυξης \textlatin{OSS} και να επεξεργαστεί τον κώδικα του έτσι ώστε οι έλεγχοι τμήματος να τερματίζουν άνευ προβλημάτων.
 
 % Part 1 graph
 \includegraphics[
     width=\textwidth,
     height=\textheight,
     keepaspectratio
-]{images/open_source_software_development_one.png}
+]{images/open_source_software_development_one.png}\\*
 
-% Part 2
+Σε αυτό το σημείο κάθε ομάδα ανάπτυξης \textlatin{OSS} έχει τον δικό της τρόπο ένταξης του νέου κώδικα στο κεντρικό κλαδί του αποθετηρίου. Οι πιο μικρές ομάδες, με σχετικά μικρά σε σκέλος πρότζεκτ, ενδέχεται να εντάσσουν νέες προσθήκες κατευθείαν στο κεντρικό κλαδί. Όμως, μία τέτοια πρακτική θα ήταν μη βιώσιμη για μία μεγαλύτερη ομάδα και θα παραβίαζε όλες τις αρχές συγγραφής "καθαρού" κώδικα.
+
+Μία συνήθης μέθοδος δημοσιοποίησης του λογισμικού είναι αυτή της \textlatin{pre-release} έκδοσης. Ουσιαστικά, μία αρχική, αλλά λειτουργική έκδοση, του προγράμματος δημοσιοποιείται και είναι διαθέσιμοι για όλους. Κατά αυτόν τον τρόπο, περισσότεροι χρήστες δοκιμάζουν το λογισμικό πριν την τελική του έκδοση. Σε μια παραδοσιακή έκδοση, οι μόνοι που δρουν ως \textlatin{beta testers} του λογισμικού είναι οι ίδιοι οι προγραμματιστές που το αναπτύσσουν. Αντιθέτως, σε μία \textlatin{pre-release} έκδοση το πρόγραμμα αποκτά περισσότερους χρήστες και κατά συνέπεια περισσότερες ευκαιρίες για \textlatin{feedback}.\\*
 
 % Part 2 graph
 \includegraphics[
     width=\textwidth,
     height=\textheight,
     keepaspectratio
-]{images/open_source_software_development_two.png}
-
-% Epilogue
+]{images/open_source_software_development_two.png}\\*
 
 \subsection{Μοντέρνος Έλεγχος Ποιότητας}
 
@@ -575,7 +577,7 @@ H συνολική τεχνική ωφέλεια μιας εφαρμογής υ�
 
 \subsubsection{Έλεγχος Εγκατάστασης}
 Έλεγχοι που αφορούν το περιβάλλον εκτέλεσης το λογισμικού. Συνήθως, αυτοί οι έλεγχοι πραγματοποιούνται μετά την πλήρη ανάπτυξη του λογισμικού αλλά και την εκσφαλμάτωσή του και αφορούν την λειτουργία σε διαφορετικά περιβάλλοντα όπως (π.χ. λειτουργικά συστήματα).
-\section{Επίλογος}
+\section{\textbf{Επίλογος}}
 \textit{\textbf{Σε αυτήν την εργασία αποπειραθήκαμε να δώσουμε μία οπτική στην διαδικασία ανάπτυξης, εκσφαλμάτωσης, εκτέλεσης και ελέγχου λογισμικού ανοιχτού κώδικα. Ο στόχος μας στα πλάισια του μαθήματος "Επαλήθευση, Επικύρωση και Συντήρηση λογισμικού" ήταν να μπορέσουμε να εστιάσουμε πρωτίστως στο κομμάτι του ελέγχου του λογισμικού και για αυτόν ακριβώς τον λόγο παραθέσαμε σωρεία τακτικών και μετρικών ελέγχου και ποιότητας που χρησιμοποιούνται ανά καιρούς σε επιμέρους τμήματα λογισμικού \textlatin{a priori} του τελικού \textlatin{release} στο ευρύ κοινό.}}
 \section{Βιβλιογραφία}
 \textlatin{\href{https://www.atlassian.com/git/tutorials/what-is-version-control}{https://www.atlassian.com/git/tutorials/what-is-version-control}}\\*
@@ -589,9 +591,11 @@ H συνολική τεχνική ωφέλεια μιας εφαρμογής υ�
 \textlatin{\href{https://softeng.gr}{https://softeng.gr}}\\*
 \textlatin{\href{https://www.freecodecamp.org/news/how-to-contribute-to-open-source-projects-beginners-guide}{https://www.freecodecamp.org/news/how-to-contribute-to-open-source-projects-beginners-guide}}
 \textlatin{\href{https://ubuntu.com/server/docs}{https://ubuntu.com/server/docs}}
-\textlatin{\href{https://www.kernel.org}{https://www.kernel.org}}
-
-
-
+\textlatin{\href{https://www.kernel.org}{https://www.kernel.org}}\\*
+\textlatin{\textcolor{red}{Tamer Abdou, Peter Grogono, and Pankaj Kamthan. A conceptual framework for open source software test process. pages 458 –463, 07 2012.}}\\*
+\\*
+\\*
+\\*
+ΣΑΣ ΕΥΧΑΡΙΣΤΟΥΜΕ ΠΟΛΥ!
 }} %font
 \end{document}
