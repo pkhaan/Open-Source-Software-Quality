@@ -4,7 +4,7 @@
 
 Αντί για το overleaf μπορείτε να κάνετε compile to project μέσω wsl ή native linux distro απλά εισάγοντας το **main.tex** αρχείο στο bash έχοντας πάντα πρώτα κατεβασμένα τα binaries του latex.
 
-**<u>Instructions</u>**
+**<u>Instructions</u>**  
 Για να κατεβάσετε το πακέτο:
 ```bash
 sudo apt install texlive-latex-extra
@@ -14,4 +14,4 @@ sudo apt install texlive-latex-extra
 pdflatex main.tex
 ```
 and you're all set!
-###### Credits to [Kostas](https://github.com/KonstantinosVasilopoulos) for collaborating.
+###### Credits to [Kostas](https://github.com/KonstantinosVasilopoulos) for collaborating.:100:
